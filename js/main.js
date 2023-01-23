@@ -3,16 +3,14 @@ let channels = [];
 let audio;
 
 document.addEventListener("DOMContentLoaded", async function () {
-    document.getElementById('mainnavlist').addEventListener("click", function () {
-        audio.src = '';
-    })
+
     try {
         const response = await fetch(`${baseUrl}channels?size=20&format=json`);
         const json = await response.json();
         channels = json.channels;
         renderChannels();
     } catch (error) {
-        alert("error " + error);
+        alert(error);
     }
 });
 document.getElementById("searchbutton").addEventListener("click", e => {
@@ -25,6 +23,9 @@ document.getElementById("searchbutton").addEventListener("click", e => {
         })
         .catch(err => alert(err));
 });
+document.getElementById('mainnavlist').addEventListener("click", function () {
+    audio.src = '';
+})
 
 function displaySchedule(data) {
     document.getElementById("info").innerHTML = "";
@@ -87,7 +88,6 @@ async function renderInfo(id, name, tagline) {
 }
 
 function playAudio(url) {
-    if (audio) audio.src = '';
     audio = new Audio(url);
     audio.play();
 
